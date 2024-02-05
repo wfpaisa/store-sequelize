@@ -1,0 +1,23 @@
+https://dbdiagram.io/
+
+
+Table users {
+  id uuid [primary key]
+  email varchar
+  name varchar
+  lastname varchar
+  role varchar
+  createdAt datetime
+  updatedAt datetime
+}
+
+
+Table carts {
+  id uuid [primary key]
+  products text
+  userId uuid [null]
+  createdAt datetime
+  updatedAt datetime
+}
+
+Ref: users.id < carts.userId
