@@ -21,6 +21,7 @@ export const UsersModel = sequelize.define(
     },
     role: {
       type: DataTypes.STRING,
+      defaultValue: "public",
     },
   },
   {
