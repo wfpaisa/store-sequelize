@@ -10,7 +10,7 @@ async function runServer() {
   // console.log("------- Postgres db conectado -------");
 
   // Sincronizar tabla
-  await sequelize.sync({ force: false });
+  await sequelize.sync({ force: true });
 
   // Iniciarmos el servidor
   app.listen(4000);

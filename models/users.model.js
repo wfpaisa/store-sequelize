@@ -29,10 +29,13 @@ export const UsersModel = sequelize.define(
   }
 );
 
-UsersModel.hasMany(CartsModel, {
-  foreignKey: "userId",
-  sourceKey: "id",
-});
+UsersModel.hasMany(CartsModel);
+CartsModel.belongsTo(UsersModel);
+
+// UsersModel.hasMany(CartsModel, {
+//   foreignKey: "userId",
+//   sourceKey: "id",
+// });
 
 // CartsModel.belongsTo(UsersModel, {
 //   foreignKey: 'userId',
