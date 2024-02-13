@@ -1,5 +1,6 @@
 import express from "express";
 import usersRoutes from "./routes/users.routes.js";
+import cartsRoutes from "./routes/carts.routes.js";
 
 // Crear app
 const app = express();
@@ -15,5 +16,6 @@ app.use(express.json());
 
 // Routes
 app.use(usersRoutes);
+app.use(cartsRoutes);
 
 export default app;

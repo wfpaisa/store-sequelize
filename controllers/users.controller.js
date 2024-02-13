@@ -126,3 +126,30 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+/**
+ * Esto crea usuarios
+ * @param {import("express").Request} req Este es el request
+ * @param {import("express").Response} res Esta es la respuesta
+ */
+export const createUsers = async (req, res) => {
+  try {
+    const usersData = req.body; // Array de objetos de usuario
+
+    // Crear un nuevo array de usuarios utilizando map y Promise.all para realizar operaciones asincrónicas en paralelo
+    const newUsers = await Promise.all(usersData.map(async (userData) => {
+      const { email, name, lastName, role } = userData;
+      return await UsersModel.create({
+        email,
+        name,
+        lastName,
+        role,
+      });
+    }));
+
+    res.json(newUsers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
