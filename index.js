@@ -10,11 +10,13 @@ async function runServer() {
   // console.log("------- Postgres db conectado -------");
 
   // Sincronizar tabla
-  await sequelize.sync({ force: true });
+  await sequelize.sync({ force: false });
 
   // Iniciarmos el servidor
   app.listen(4000);
   console.log("------- Corriendo en el 4000 -------");
 }
+
+console.log("----->", process.env.XX_DB);
 
 runServer();

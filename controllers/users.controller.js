@@ -1,4 +1,5 @@
 import { UsersModel } from "../models/users.model.js";
+import { CartsModel } from "../models/carts.model.js";
 
 /**
  * Esto obtiene los usuarios
@@ -35,6 +36,7 @@ export const getUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     // throw new Error("Hay un error");
+    console.log("APIKEY desde cliente es:", req.headers.authorization);
 
     const { email, name, lastName, role } = req.body;
 
@@ -45,6 +47,7 @@ export const createUser = async (req, res) => {
       role,
     });
 
+    res.set("XTEST", "Valor de xtest");
     res.json(newUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -127,7 +130,6 @@ export const getUser = async (req, res) => {
   }
 };
 
-
 /**
  * Esto crea usuarios
  * @param {import("express").Request} req Este es el request
@@ -138,17 +140,45 @@ export const createUsers = async (req, res) => {
     const usersData = req.body; // Array de objetos de usuario
 
     // Crear un nuevo array de usuarios utilizando map y Promise.all para realizar operaciones asincrónicas en paralelo
-    const newUsers = await Promise.all(usersData.map(async (userData) => {
-      const { email, name, lastName, role } = userData;
-      return await UsersModel.create({
-        email,
-        name,
-        lastName,
-        role,
-      });
-    }));
+    const newUsers = await Promise.all(
+      usersData.map(async (userData) => {
+        const { email, name, lastName, role } = userData;
+        return await UsersModel.create({
+          email,
+          name,
+          lastName,
+          role,
+        });
+      })
+    );
 
     res.json(newUsers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/**
+ * Esto obtiene los los carritos de un usuartio
+ * @param {import("express").Request} req Este es el request
+ * @param {import("express").Response} res Esta es la respuesta
+ */
+export const getUserCarts = async (req, res) => {
+  try {
+    const query = req.query;
+    const { id } = req.params;
+    // console.log("Filtros:", query);
+
+    // Inicializamos un objeto vacío para almacenar los filtros
+    const where = {
+      userId: id,
+    };
+
+    const allCarts = await CartsModel.findAll({
+      where,
+    });
+
+    res.json(allCarts);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -17,5 +17,6 @@ app.use(express.json());
 // Routes
 app.use(usersRoutes);
 app.use(cartsRoutes);
+app.use("/public", express.static("public"));
 
 export default app;

@@ -11,11 +11,9 @@ export const getCarts = async (req, res) => {
 
     res.json(allCarts);
   } catch (error) {
-
     res.status(500).json({ message: error.message });
   }
 };
-
 
 /**
  * Esto crea un Carrito
@@ -26,14 +24,19 @@ export const createCarts = async (req, res) => {
   try {
     // throw new Error("Hay un error");
 
-    const { products } = req.body;
+    const { products, userId } = req.body;
 
     const newCart = await CartsModel.create({
       products,
+      userId,
     });
 
     res.json(newCart);
   } catch (err) {
+    if (err.message.includes("carts_userId_fkey")) {
+      return res.status(400).json({ message: "El usuario no existe" });
+    }
+
     res.status(500).json({ message: err.message });
   }
 };
@@ -56,7 +59,6 @@ export const updateCarts = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 /**
  * Esto Elimina un Carrito

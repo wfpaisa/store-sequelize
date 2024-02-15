@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "l": "node --watch index.js"
+    "l": "node --watch --env-file=.env.dev index.js",
+    "prod": "node --watch --env-file=.env.prod index.js"
   },
   "author": "wfpaisa,sdpaisa",
   "license": "MIT",
@@ -16,5 +17,9 @@
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.36.0"
+  },
+  "engines": {
+    "node": "v21.6.1",
+    "npm": "10.2.4"
   }
 }
